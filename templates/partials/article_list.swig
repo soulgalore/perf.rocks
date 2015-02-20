@@ -5,7 +5,7 @@
     </div>
     {% for article in article_list|reverse %}
         <li class="article-list__item">
-            <h2 class="m0"><a class="unlink" href="{{ article.url }}">{{ article.title }}</a></h2>
+            <h2 class="m0"><a class="unlink" href="{{ article.link }}">{{ article.title }}</a></h2>
             {% if article.author %}
                 <p class="micro | weak-text-color | m0">by
                     {% for author in article.author %}

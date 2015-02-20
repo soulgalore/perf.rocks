@@ -39,7 +39,7 @@ module.exports = function(grunt) {
                 layoutdir: '<%= site.layouts %>',
                 layout:    '<%= site.layout %>',
                 helpers:   ['<%= site.helpers %>/*.js', '<%= site.helpers %>/filters/*.js'],
-                plugins:   ['assemble-contrib-permalinks'],
+                plugins:   ['assemble-contrib-permalinks', 'assemble-middleware-rss'],
             },
 
             // -----------------------------------------------------------------
@@ -87,7 +87,19 @@ module.exports = function(grunt) {
                         return {
                             filename: mySlug(data.category),
                             data: data,
-                            content: grunt.file.read('templates/partials/category.swig')
+                            content: grunt.file.read('templates/partials/category.swig'),
+                            // @todo: this shouldn't go here. It's generating the feed
+                            // based on article topics. We need a general feed
+                            // for all new articles, and if possible, for all other items
+                            // too.
+                            rss: {
+                                title: 'Pref.Rocks',
+                                description: 'Perf Rocks RSS feed.',
+                                dest: '<%= site.dest %>/articles/feed.xml',
+                                copyright: '© 2015, Daniel Guillan',
+                                generator: 'me',
+
+                            }
                         }
                     })),
                     permalinks: {
